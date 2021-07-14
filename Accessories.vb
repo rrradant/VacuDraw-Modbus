@@ -107,12 +107,10 @@ Module Accessories
         DataBase_Init = False
         Dim strSQL As String
         Try
-            strServerConn = Read_INI(strINIFile, "[Connection]", "ConnString")
-
             'Testing connection 
             Dim DBConn As New SqlConnection(strServerConn)
             DBConn.Open()
-            strSQL = "SELECT * FROM [TemperatureSurvey].[dbo].[Equipment]"
+            strSQL = "SELECT * FROM [ProcessData].[dbo].[VacuDraw]"
             Dim DBcmd1 As New SqlCommand(strSQL, DBConn)
             Dim DBReader1 As SqlDataReader = DBcmd1.ExecuteReader
             If DBReader1.HasRows = False Then
@@ -189,17 +187,68 @@ Module Accessories
             If sngTemp < 0 Then sngTemp = 0
             Param02.Value = sngTemp
 
-            Param03.Value = 0
-            Param04.Value = 0
-            Param05.Value = 0
-            Param06.Value = 0
-            Param07.Value = 0
-            Param08.Value = 0
-            Param09.Value = 0
-            Param10.Value = 0
-            Param11.Value = 0
-            Param12.Value = 0
-            Param13.Value = 0
+            'Work Load Temperature
+            intTemp = CInt(VacuDrawArray(3, 1))
+            If intTemp < 0 Or intTemp > 2000 Then intTemp = 0
+            Param03.Value = intTemp
+
+            'Vacuum level
+            sngTemp = VacuDrawArray(4, 1) / 10
+            If sngTemp < 0 Or sngTemp > 3000 Then sngTemp = 0
+            Param04.Value = sngTemp
+
+            'Pressure Level
+            sngTemp = VacuDrawArray(5, 1) / 10
+            If sngTemp < 0 Then sngTemp = 0
+            Param05.Value = sngTemp
+
+            'Heater Load A %
+            sngTemp = VacuDrawArray(6, 1) / 100
+            If sngTemp < 0 Then sngTemp = 0
+            Param06.Value = sngTemp
+
+            'Heater Load B %
+            sngTemp = VacuDrawArray(7, 1) / 100
+            If sngTemp < 0 Then sngTemp = 0
+            Param07.Value = sngTemp
+
+            'Temperature Inlet Water
+            intTemp = CInt(VacuDrawArray(8, 1))
+            If intTemp < 0 Or intTemp > 1000 Then intTemp = 0
+            Param08.Value = intTemp
+
+            'Temperature Set Point
+            intTemp = CInt(VacuDrawArray(9, 1))
+            If intTemp < 0 Or intTemp > 1000 Then intTemp = 0
+            Param09.Value = intTemp
+
+            'Circulation Fan On
+            If CInt(VacuDrawArray(10, 1)) = 1 Then
+                Param10.Value = 1
+            Else
+                Param10.Value = 0
+            End If
+
+            'Cooling Fan On
+            If CInt(VacuDrawArray(11, 1)) = 1 Then
+                Param11.Value = 1
+            Else
+                Param11.Value = 0
+            End If
+
+            'Roughing Pump On
+            If CInt(VacuDrawArray(12, 1)) = 1 Then
+                Param12.Value = 1
+            Else
+                Param12.Value = 0
+            End If
+
+            'Booster On
+            If CInt(VacuDrawArray(13, 1)) = 1 Then
+                Param13.Value = 1
+            Else
+                Param13.Value = 0
+            End If
 
             'Execute Append query
             Dim DBcmd1 As New SqlCommand(strAppendQuery, DBConn)
@@ -208,14 +257,26 @@ Module Accessories
             Dim dbDA As New SqlDataAdapter(DBcmd1)
             RecordCount = dbDA.Fill(dbDT)
 
+            MainForm.txtLastRead.Text = Now
+            MainForm.txtLastRead.Refresh()
+
             DBcmd1.Dispose()
             If DBConn.State = ConnectionState.Open Then
                 DBConn.Close()
             End If
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            WriteMessage(ex.Message)
         End Try
+    End Sub
 
+    Public Sub WriteMessage(txtMsg As String)
+        Dim strMessage As String
+        Try
+            strMessage = vbCrLf & Now.ToString & vbTab & Trim(txtMsg)
+            MainForm.txtMessages.AppendText(strMessage)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error on Message writing.")
+        End Try
     End Sub
 End Module

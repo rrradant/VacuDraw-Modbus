@@ -2,16 +2,8 @@
     'Define ModBus Polling array
     'Columns are: 1) Address 2) Value
     Public VacuDrawArray(13, 1) As Single
-
-    Dim TempArray(40, 3) As Single
-
     Public strINIFile As String
     Public strIPAdd As String
-
-    Sub Poll_VacuDraw()
-
-
-    End Sub
 
     Function FillVacuDrawArray() As Boolean
         FillVacuDrawArray = False
@@ -38,20 +30,13 @@
     End Function
 
     Function Read_VacuDraw() As Boolean
-
-        Dim ProcName As String = "ProcessStatus"
         Dim n As Integer
         Dim booConn As Boolean
-        Dim IR(41) As Integer 'Modbus Input Registers
         Dim HR(1) As Integer
         Dim intHR As Integer
-        Dim MFaults(10) As Integer
         Dim Machine = New EasyModbus.ModbusClient
-        Dim swDuration As New Stopwatch
         Read_VacuDraw = False
 
-
-        strIPAdd = "172.16.16.33"
         booConn = False 'Used to determine if communcations with this machine was made
         Do
             n = n + 1
@@ -64,18 +49,16 @@
                     Threading.Thread.Sleep(100)
                 End If
             Catch ex As Exception
-                'My.Application.Log.WriteException(ex, TraceEventType.Error, Now().ToString & vbTab & ProcName)
                 Machine.Disconnect()
             End Try
         Loop While n <= 3 And Machine.Connected = False
         If Machine.Connected = True Then
             booConn = True 'Connection is made
         Else
-            MessageBox.Show("Unable to connect to ModBus Server.", "Error in Read_VacuDraw")
+            WriteMessage("Error in Read_VacuDraw. Unable to connect to ModBus Server.")
+            Call MakeBlankData()
             Exit Function
         End If
-
-        FillVacuDrawArray()
 
         Try
             For n = 0 To VacuDrawArray.GetUpperBound(0)
@@ -86,11 +69,20 @@
             Machine.Disconnect()
             Read_VacuDraw = True
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "Exception in Read_VacuDraw")
+            WriteMessage("Exception in Read_VacuDraw " & ex.Message)
+            Call MakeBlankData()
         End Try
 
-        For n = 0 To VacuDrawArray.GetUpperBound(0)
-            Console.WriteLine(VacuDrawArray(n, 1).ToString)
-        Next n
+        'Debugging use
+        'For n = 0 To VacuDrawArray.GetUpperBound(0)
+        'Console.WriteLine(VacuDrawArray(n, 1).ToString)
+        'Next n
     End Function
+
+    Public Sub MakeBlankData()
+        Dim n As Integer
+        For n = 0 To VacuDrawArray.GetUpperBound(0)
+            VacuDrawArray(n, 1) = 0
+        Next
+    End Sub
 End Module
