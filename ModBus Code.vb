@@ -1,0 +1,90 @@
+﻿Module ModBus_Code
+    'Define ModBus Polling array
+    'Columns are: 1) Address 2) Value
+    Public VacuDrawArray(13, 1) As Single
+
+    Dim TempArray(40, 3) As Single
+
+    Public strINIFile As String
+    Public strIPAdd As String
+
+    Sub Poll_VacuDraw()
+
+
+    End Sub
+
+    Function FillVacuDrawArray() As Boolean
+        FillVacuDrawArray = False
+        Try
+            VacuDrawArray(0, 0) = 41433 'TempSP
+            VacuDrawArray(1, 0) = 41436 'TempAct
+            VacuDrawArray(2, 0) = 41439 'TempOut
+            VacuDrawArray(3, 0) = 41442 'TempLoad
+            VacuDrawArray(4, 0) = 41445 'Vacuum
+            VacuDrawArray(5, 0) = 41448 'Pressure
+            VacuDrawArray(6, 0) = 41451 'HeaterLoadA
+            VacuDrawArray(7, 0) = 41454 'HeaterLoadB
+            VacuDrawArray(8, 0) = 41457 'TempWaterIn
+            VacuDrawArray(9, 0) = 41460 'TempWaterOut
+            VacuDrawArray(10, 0) = 41490 'CirculationFanOn Channel 20
+            VacuDrawArray(11, 0) = 41493 'CoolingFanOn Channel 21
+            VacuDrawArray(12, 0) = 41496 'RoughingPumpOn Channel 22
+            VacuDrawArray(13, 0) = 41499 'BoosterOn Channel 23
+
+            FillVacuDrawArray = True
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Exception in FillVacuDrawArray")
+        End Try
+    End Function
+
+    Function Read_VacuDraw() As Boolean
+
+        Dim ProcName As String = "ProcessStatus"
+        Dim n, i, tmpX, intAdd, intBit As Integer
+        Dim booConn, booIR As Boolean
+        Dim IR(41) As Integer 'Modbus Input Registers
+        Dim HR(1) As Integer
+        Dim intHR As Integer
+        Dim MFaults(10) As Integer
+        Dim Machine = New EasyModbus.ModbusClient
+        Dim swDuration As New Stopwatch
+        Read_VacuDraw = False
+
+
+        strIPAdd = "172.16.16.33"
+        booConn = False 'Used to determine if communcations with this machine was made
+        Do
+            n = n + 1
+            Try
+                If Machine.Connected = False Then
+                    Machine.IPAddress = strIPAdd
+                    Machine.Port = 502
+                    Machine.Connect()
+                Else
+                    Threading.Thread.Sleep(100)
+                End If
+            Catch ex As Exception
+                'My.Application.Log.WriteException(ex, TraceEventType.Error, Now().ToString & vbTab & ProcName)
+                Machine.Disconnect()
+            End Try
+        Loop While n <= 3 And Machine.Connected = False
+        If Machine.Connected = True Then
+            booConn = True 'Connection is made
+        Else
+            MessageBox.Show("Unable to connect to ModBus Server.", "Error in Read_VacuDraw")
+            Exit Function
+        End If
+
+        Try
+            For n = 0 To VacuDrawArray.GetUpperBound(0)
+                HR = Machine.ReadHoldingRegisters(VacuDrawArray(n, 0), 1)
+                intHR = CInt(HR(0))
+                VacuDrawArray(n, 1) = intHR
+            Next
+            Machine.Disconnect()
+            Read_VacuDraw = True
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Exception in Read_VacuDraw")
+        End Try
+    End Function
+End Module
