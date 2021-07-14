@@ -13,19 +13,19 @@ Module Accessories
 
         Try
             'Prep the passed strings
-            If Not INI_File Is Nothing Then
+            If INI_File IsNot Nothing Then
                 INI_File = Trim(UCase(INI_File))
             Else
                 Throw New Exception("Passed INI_File parameter empty or null.")
             End If
 
-            If Not INI_Section Is Nothing Then
+            If INI_Section IsNot Nothing Then
                 INI_Section = Trim(UCase(INI_Section))
             Else
                 Throw New Exception("Passed INI_Section parameter empty or null.")
             End If
 
-            If Not INI_Key Is Nothing Then
+            If INI_Key IsNot Nothing Then
                 INI_Key = Trim(UCase(INI_Key))
             Else
 
@@ -137,64 +137,69 @@ Module Accessories
         Dim DBConn As New SqlConnection(strServerConn)
         Dim strAppendQuery As String
         Dim RecordCount As Integer
-
+        Dim intTemp As Integer
+        Dim sngTemp As Single
         Try
 
 
             'Append aggregate values
-            strAppendQuery = "INSERT INTO [SurveyTemps] (EquipID, TC01, TC02, TC03, TC04, TC05, TC06, " &
-                        "TC07, TC08, TC09, TC10, TC11, TC12 )" &
-                        "VALUES (@Equip, @R01, @R02, @R03, @R04, @R05, @R06, @R07, " &
-                        "@R08, @R09, @R10, @R11, @R12);"
+            strAppendQuery = "INSERT INTO [VacuDraw] (TempSP, TempAct, TempOut, " &
+                "TempLoad, Vacuum, Pressure, HeaterLoadA, HeaterLoadB, TempWaterIn, " &
+                "TempWaterOut, CirculationFanOn, CoolingFanOn, RoughingPumpOn, BoosterOn )" &
+                "VALUES (@P00, @P01, @P02, @P03, @P04, @P05, @P06, @P07, " &
+                "@P08, @P09, @P10, @P11, @P12, @P13);"
 
             'Creates Parameters for database writing
             Dim SQLParams As New List(Of SqlParameter)
             '"VALUES (@Stamp, @Comms, @TC1, @TC2, @Z1, @Z2, @Z3, @Z4, @Z5, @Z1A, @Z2A, @Z3A, @Z4A, @Z5A)
-            Dim Param01 As New SqlParameter("@Equip", 0)
-            Dim Param02 As New SqlParameter("@R01", 0)
-            Dim Param03 As New SqlParameter("@R02", 0)
-            Dim Param04 As New SqlParameter("@R03", 0)
-            Dim Param05 As New SqlParameter("@R04", 0)
-            Dim Param06 As New SqlParameter("@R05", 0)
-            Dim Param07 As New SqlParameter("@R06", 0)
-            Dim Param08 As New SqlParameter("@R07", 0)
-            Dim Param09 As New SqlParameter("@R08", 0)
-            Dim Param10 As New SqlParameter("@R09", 0)
-            Dim Param11 As New SqlParameter("@R10", 0)
-            Dim Param12 As New SqlParameter("@R11", 0)
-            Dim Param13 As New SqlParameter("@R12", 0)
+            Dim Param00 As New SqlParameter("@P00", 0) 'TempSP
+            Dim Param01 As New SqlParameter("@P01", 0) 'TempAct
+            Dim Param02 As New SqlParameter("@P02", 0) 'TempOut
+            Dim Param03 As New SqlParameter("@P03", 0) 'TempLoad
+            Dim Param04 As New SqlParameter("@P04", 0) 'Vacuum
+            Dim Param05 As New SqlParameter("@P05", 0) 'Pressure
+            Dim Param06 As New SqlParameter("@P06", 0) 'HeaterLoadA
+            Dim Param07 As New SqlParameter("@P07", 0) 'HeaterLoadB
+            Dim Param08 As New SqlParameter("@P08", 0) 'TempWaterIn
+            Dim Param09 As New SqlParameter("@P09", 0) 'TempWaterOut
+            Dim Param10 As New SqlParameter("@P10", 0) 'CirculationFanOn
+            Dim Param11 As New SqlParameter("@P11", 0) 'CoolingFanOn
+            Dim Param12 As New SqlParameter("@P12", 0) 'RoughingPumpOn
+            Dim Param13 As New SqlParameter("@P13", 0) 'BoosterOn
+            'Add Params to List of Parameters
+            SQLParams.Add(Param00) : SQLParams.Add(Param01) : SQLParams.Add(Param02)
+            SQLParams.Add(Param03) : SQLParams.Add(Param04) : SQLParams.Add(Param05)
+            SQLParams.Add(Param06) : SQLParams.Add(Param07) : SQLParams.Add(Param08)
+            SQLParams.Add(Param09) : SQLParams.Add(Param10) : SQLParams.Add(Param11)
+            SQLParams.Add(Param12) : SQLParams.Add(Param13)
 
-            SQLParams.Add(Param01) : SQLParams.Add(Param02) : SQLParams.Add(Param03)
-            SQLParams.Add(Param04) : SQLParams.Add(Param05) : SQLParams.Add(Param06)
-            SQLParams.Add(Param07) : SQLParams.Add(Param08) : SQLParams.Add(Param09)
-            SQLParams.Add(Param10) : SQLParams.Add(Param11) : SQLParams.Add(Param12)
-            SQLParams.Add(Param13)
+            'Assign values to Parameters
+            'Temperature Set Point
+            intTemp = CInt(VacuDrawArray(0, 1))
+            If intTemp < 0 Or intTemp > 2000 Then intTemp = 0
+            Param00.Value = intTemp
 
-            Param01.Value = MainForm.cmbSource.SelectedValue
-            If Not TempArray(0, 3) = -1 Then Param02.Value = TempArray(0, 3)
-            If Not TempArray(1, 3) = -1 Then Param03.Value = TempArray(1, 3)
-            If Not TempArray(2, 3) = -1 Then Param04.Value = TempArray(2, 3)
-            If Not TempArray(3, 3) = -1 Then Param05.Value = TempArray(3, 3)
-            If Not TempArray(4, 3) = -1 Then Param06.Value = TempArray(4, 3)
-            If Not TempArray(5, 3) = -1 Then Param07.Value = TempArray(5, 3)
-            If Not TempArray(6, 3) = -1 Then Param08.Value = TempArray(6, 3)
-            If Not TempArray(7, 3) = -1 Then Param09.Value = TempArray(7, 3)
-            If Not TempArray(8, 3) = -1 Then Param10.Value = TempArray(8, 3)
-            If Not TempArray(9, 3) = -1 Then Param11.Value = TempArray(9, 3)
-            If Not TempArray(10, 3) = -1 Then Param12.Value = TempArray(10, 3)
-            If Not TempArray(11, 3) = -1 Then Param13.Value = TempArray(11, 3)
+            'Actual Control Temperature
+            intTemp = CInt(VacuDrawArray(1, 1))
+            If intTemp < 0 Or intTemp > 2000 Then intTemp = 0
+            Param01.Value = intTemp
 
-            'Param03.Value = TempArray(1, 3)
-            'Param04.Value = TempArray(2, 3)
-            'Param05.Value = TempArray(3, 3)
-            'Param06.Value = TempArray(4, 3)
-            'Param07.Value = TempArray(5, 3)
-            'Param08.Value = TempArray(6, 3)
-            'Param09.Value = TempArray(7, 3)
-            'Param10.Value = TempArray(8, 3)
-            'Param11.Value = TempArray(9, 3)
-            'Param12.Value = TempArray(10, 3)
-            'Param13.Value = TempArray(11, 3)
+            'Heating Output %
+            sngTemp = VacuDrawArray(2, 1) / 100
+            If sngTemp < 0 Then sngTemp = 0
+            Param02.Value = sngTemp
+
+            Param03.Value = 0
+            Param04.Value = 0
+            Param05.Value = 0
+            Param06.Value = 0
+            Param07.Value = 0
+            Param08.Value = 0
+            Param09.Value = 0
+            Param10.Value = 0
+            Param11.Value = 0
+            Param12.Value = 0
+            Param13.Value = 0
 
             'Execute Append query
             Dim DBcmd1 As New SqlCommand(strAppendQuery, DBConn)

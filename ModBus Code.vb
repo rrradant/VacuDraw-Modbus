@@ -40,8 +40,8 @@
     Function Read_VacuDraw() As Boolean
 
         Dim ProcName As String = "ProcessStatus"
-        Dim n, i, tmpX, intAdd, intBit As Integer
-        Dim booConn, booIR As Boolean
+        Dim n As Integer
+        Dim booConn As Boolean
         Dim IR(41) As Integer 'Modbus Input Registers
         Dim HR(1) As Integer
         Dim intHR As Integer
@@ -75,9 +75,11 @@
             Exit Function
         End If
 
+        FillVacuDrawArray()
+
         Try
             For n = 0 To VacuDrawArray.GetUpperBound(0)
-                HR = Machine.ReadHoldingRegisters(VacuDrawArray(n, 0), 1)
+                HR = Machine.ReadHoldingRegisters(VacuDrawArray(n, 0), 2)
                 intHR = CInt(HR(0))
                 VacuDrawArray(n, 1) = intHR
             Next
@@ -86,5 +88,9 @@
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Exception in Read_VacuDraw")
         End Try
+
+        For n = 0 To VacuDrawArray.GetUpperBound(0)
+            Console.WriteLine(VacuDrawArray(n, 1).ToString)
+        Next n
     End Function
 End Module
