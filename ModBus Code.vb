@@ -1,7 +1,7 @@
 ﻿Module ModBus_Code
     'Define ModBus Polling array
     'Columns are: 1) Address 2) Value
-    Public VacuDrawArray(13, 1) As Single
+    Public VacuDrawArray(15, 1) As Single
     Public strINIFile As String
     Public strIPAdd As String
 
@@ -22,6 +22,8 @@
             VacuDrawArray(11, 0) = 41493 'CoolingFanOn Channel 21
             VacuDrawArray(12, 0) = 41496 'RoughingPumpOn Channel 22
             VacuDrawArray(13, 0) = 41499 'BoosterOn Channel 23
+            VacuDrawArray(14, 0) = 41502 'RecipeNumber Channel 24
+            VacuDrawArray(15, 0) = 41505 'RecipeRunning Channel 25
 
             FillVacuDrawArray = True
         Catch ex As Exception

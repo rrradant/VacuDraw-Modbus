@@ -143,13 +143,13 @@ Module Accessories
             'Append aggregate values
             strAppendQuery = "INSERT INTO [VacuDraw] (TempSP, TempAct, TempOut, " &
                 "TempLoad, Vacuum, Pressure, HeaterLoadA, HeaterLoadB, TempWaterIn, " &
-                "TempWaterOut, CirculationFanOn, CoolingFanOn, RoughingPumpOn, BoosterOn )" &
+                "TempWaterOut, CirculationFanOn, CoolingFanOn, RoughingPumpOn, " &
+                "BoosterOn, RecipeRunning, RecipeNumber )" &
                 "VALUES (@P00, @P01, @P02, @P03, @P04, @P05, @P06, @P07, " &
-                "@P08, @P09, @P10, @P11, @P12, @P13);"
+                "@P08, @P09, @P10, @P11, @P12, @P13, @P14, @P15);"
 
             'Creates Parameters for database writing
             Dim SQLParams As New List(Of SqlParameter)
-            '"VALUES (@Stamp, @Comms, @TC1, @TC2, @Z1, @Z2, @Z3, @Z4, @Z5, @Z1A, @Z2A, @Z3A, @Z4A, @Z5A)
             Dim Param00 As New SqlParameter("@P00", 0) 'TempSP
             Dim Param01 As New SqlParameter("@P01", 0) 'TempAct
             Dim Param02 As New SqlParameter("@P02", 0) 'TempOut
@@ -164,12 +164,15 @@ Module Accessories
             Dim Param11 As New SqlParameter("@P11", 0) 'CoolingFanOn
             Dim Param12 As New SqlParameter("@P12", 0) 'RoughingPumpOn
             Dim Param13 As New SqlParameter("@P13", 0) 'BoosterOn
+            Dim Param14 As New SqlParameter("@P14", 0) 'RecipeNumber
+            Dim Param15 As New SqlParameter("@P15", 0) 'RecipeRunning
             'Add Params to List of Parameters
             SQLParams.Add(Param00) : SQLParams.Add(Param01) : SQLParams.Add(Param02)
             SQLParams.Add(Param03) : SQLParams.Add(Param04) : SQLParams.Add(Param05)
             SQLParams.Add(Param06) : SQLParams.Add(Param07) : SQLParams.Add(Param08)
             SQLParams.Add(Param09) : SQLParams.Add(Param10) : SQLParams.Add(Param11)
-            SQLParams.Add(Param12) : SQLParams.Add(Param13)
+            SQLParams.Add(Param12) : SQLParams.Add(Param13) : SQLParams.Add(Param14)
+            SQLParams.Add(Param15)
 
             'Assign values to Parameters
             'Temperature Set Point
@@ -189,7 +192,7 @@ Module Accessories
 
             'Work Load Temperature
             intTemp = CInt(VacuDrawArray(3, 1))
-            If intTemp < 0 Or intTemp > 2000 Then intTemp = 0
+            If intTemp < 0 Or intTemp > 3000 Then intTemp = 0
             Param03.Value = intTemp
 
             'Vacuum level
@@ -199,7 +202,7 @@ Module Accessories
 
             'Pressure Level
             sngTemp = VacuDrawArray(5, 1) / 10
-            If sngTemp < 0 Then sngTemp = 0
+            If sngTemp < -10 Then sngTemp = 0
             Param05.Value = sngTemp
 
             'Heater Load A %
@@ -248,6 +251,21 @@ Module Accessories
                 Param13.Value = 1
             Else
                 Param13.Value = 0
+            End If
+
+            'Recipe Number
+            intTemp = CInt(VacuDrawArray(14, 1))
+            If intTemp < 0 Or intTemp > 200 Then
+                Param14.Value = 0
+            Else
+                Param14.Value = intTemp
+            End If
+
+            'Recipe Running
+            If CInt(VacuDrawArray(15, 1)) = 1 Then
+                Param15.Value = 1
+            Else
+                Param15.Value = 0
             End If
 
             'Execute Append query
