@@ -184,7 +184,7 @@ Module Accessories
             Param01.Value = intTemp
 
             'Heating Output %
-            sngTemp = VacuDrawArray(2, 1) / 100
+            sngTemp = VacuDrawArray(2, 1)
             If sngTemp < 0 Then sngTemp = 0
             Param02.Value = sngTemp
 
