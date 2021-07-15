@@ -138,13 +138,11 @@ Module Accessories
         Dim intTemp As Integer
         Dim sngTemp As Single
         Try
-
-
             'Append aggregate values
             strAppendQuery = "INSERT INTO [VacuDraw] (TempSP, TempAct, TempOut, " &
                 "TempLoad, Vacuum, Pressure, HeaterLoadA, HeaterLoadB, TempWaterIn, " &
                 "TempWaterOut, CirculationFanOn, CoolingFanOn, RoughingPumpOn, " &
-                "BoosterOn, RecipeRunning, RecipeNumber )" &
+                "BoosterOn, RecipeNumber, RecipeRunning )" &
                 "VALUES (@P00, @P01, @P02, @P03, @P04, @P05, @P06, @P07, " &
                 "@P08, @P09, @P10, @P11, @P12, @P13, @P14, @P15);"
 
