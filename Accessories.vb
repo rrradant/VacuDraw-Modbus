@@ -142,9 +142,9 @@ Module Accessories
             strAppendQuery = "INSERT INTO [VacuDraw] (TempSP, TempAct, TempOut, " &
                 "TempLoad, Vacuum, Pressure, HeaterLoadA, HeaterLoadB, TempWaterIn, " &
                 "TempWaterOut, CirculationFanOn, CoolingFanOn, RoughingPumpOn, " &
-                "BoosterOn, RecipeNumber, RecipeRunning )" &
+                "BoosterOn, RecipeNumber, RecipeRunning, AlarmCondition, DoorOpen )" &
                 "VALUES (@P00, @P01, @P02, @P03, @P04, @P05, @P06, @P07, " &
-                "@P08, @P09, @P10, @P11, @P12, @P13, @P14, @P15);"
+                "@P08, @P09, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17);"
 
             'Creates Parameters for database writing
             Dim SQLParams As New List(Of SqlParameter)
@@ -164,13 +164,15 @@ Module Accessories
             Dim Param13 As New SqlParameter("@P13", 0) 'BoosterOn
             Dim Param14 As New SqlParameter("@P14", 0) 'RecipeNumber
             Dim Param15 As New SqlParameter("@P15", 0) 'RecipeRunning
+            Dim Param16 As New SqlParameter("@P16", 0) 'RecipeRunning
+            Dim Param17 As New SqlParameter("@P17", 0) 'RecipeRunning
             'Add Params to List of Parameters
             SQLParams.Add(Param00) : SQLParams.Add(Param01) : SQLParams.Add(Param02)
             SQLParams.Add(Param03) : SQLParams.Add(Param04) : SQLParams.Add(Param05)
             SQLParams.Add(Param06) : SQLParams.Add(Param07) : SQLParams.Add(Param08)
             SQLParams.Add(Param09) : SQLParams.Add(Param10) : SQLParams.Add(Param11)
             SQLParams.Add(Param12) : SQLParams.Add(Param13) : SQLParams.Add(Param14)
-            SQLParams.Add(Param15)
+            SQLParams.Add(Param15) : SQLParams.Add(Param16) : SQLParams.Add(Param17)
 
             'Assign values to Parameters
             'Temperature Set Point
@@ -195,12 +197,12 @@ Module Accessories
 
             'Vacuum level
             sngTemp = VacuDrawArray(4, 1) / 10
-            If sngTemp < 0 Or sngTemp > 3000 Then sngTemp = 0
+            If sngTemp < 0 Or sngTemp > 3000 Then sngTemp = 4000 'This sets it into a range that won't be charted.
             Param04.Value = sngTemp
 
             'Pressure Level
             sngTemp = VacuDrawArray(5, 1) / 10
-            If sngTemp < -10 Then sngTemp = 0
+            If sngTemp < -14 Then sngTemp = -20 'This sets it into a range that won't be charted.
             Param05.Value = sngTemp
 
             'Heater Load A %
@@ -264,6 +266,20 @@ Module Accessories
                 Param15.Value = 1
             Else
                 Param15.Value = 0
+            End If
+
+            'Active Alarm
+            If CInt(VacuDrawArray(16, 1)) = 1 Then
+                Param16.Value = 1
+            Else
+                Param16.Value = 0
+            End If
+
+            'Door Open
+            If CInt(VacuDrawArray(17, 1)) = 1 Then
+                Param17.Value = 1
+            Else
+                Param17.Value = 0
             End If
 
             'Execute Append query

@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("VacuDraw_ModBus")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("VacuDraw DAQ")>
+<Assembly: AssemblyDescription("VacuDraw furtnace data acquisition via ModBus and SQL Server")>
+<Assembly: AssemblyCompany("SPIROL International")>
 <Assembly: AssemblyProduct("VacuDraw_ModBus")>
 <Assembly: AssemblyCopyright("Copyright ©  2021")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("RRR®")>
 
 <Assembly: ComVisible(False)>
 
