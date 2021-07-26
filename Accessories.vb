@@ -197,12 +197,12 @@ Module Accessories
 
             'Vacuum level
             sngTemp = VacuDrawArray(4, 1) / 10
-            If sngTemp < 0 Or sngTemp > 3000 Then sngTemp = 4000 'This sets it into a range that won't be charted.
+            If sngTemp < 0 Or sngTemp > 3200 Then sngTemp = 3200 'This sets it into a range that won't be charted.
             Param04.Value = sngTemp
 
             'Pressure Level
             sngTemp = VacuDrawArray(5, 1) / 10
-            If sngTemp < -14 Then sngTemp = -20 'This sets it into a range that won't be charted.
+            If sngTemp < -14.5 Then sngTemp = -14.5 'This sets it into a range that won't be charted.
             Param05.Value = sngTemp
 
             'Heater Load A %
