@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FF4FC974-68CC-46B5-892F-5B18352E9716}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>VacuDraw_ModBus.My.MyApplication</StartupObject>
-    <RootNamespace>VacuDraw_ModBus</RootNamespace>
-    <AssemblyName>VacuDraw_ModBus</AssemblyName>
+    <StartupObject>VacuDraw_DAQ.My.MyApplication</StartupObject>
+    <RootNamespace>VacuDraw_DAQ</RootNamespace>
+    <AssemblyName>VacuDraw_DAQ</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -39,7 +39,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>VacuDraw_ModBus.xml</DocumentationFile>
+    <DocumentationFile>VacuDraw_DAQ.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -49,7 +49,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>VacuDraw_ModBus.xml</DocumentationFile>
+    <DocumentationFile>VacuDraw_DAQ.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
