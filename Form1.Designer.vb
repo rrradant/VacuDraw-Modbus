@@ -29,6 +29,7 @@ Partial Class MainForm
         Me.txtLastRead = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtMessages = New System.Windows.Forms.TextBox()
+        Me.VersionText = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'ModBus_Polling_Timer
@@ -82,11 +83,22 @@ Partial Class MainForm
         Me.txtMessages.TabIndex = 4
         Me.txtMessages.WordWrap = False
         '
+        'VersionText
+        '
+        Me.VersionText.BackColor = System.Drawing.SystemColors.Control
+        Me.VersionText.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.VersionText.Location = New System.Drawing.Point(26, 211)
+        Me.VersionText.Multiline = True
+        Me.VersionText.Name = "VersionText"
+        Me.VersionText.Size = New System.Drawing.Size(242, 35)
+        Me.VersionText.TabIndex = 6
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(505, 234)
+        Me.ClientSize = New System.Drawing.Size(505, 260)
+        Me.Controls.Add(Me.VersionText)
         Me.Controls.Add(Me.txtMessages)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.txtLastRead)
@@ -107,4 +119,5 @@ Partial Class MainForm
     Friend WithEvents txtLastRead As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents txtMessages As TextBox
+    Friend WithEvents VersionText As TextBox
 End Class

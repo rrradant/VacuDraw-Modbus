@@ -142,9 +142,9 @@ Module Accessories
             strAppendQuery = "INSERT INTO [VacuDraw] (TempSP, TempAct, TempOut, " &
                 "TempLoad, Vacuum, Pressure, HeaterLoadA, HeaterLoadB, TempWaterIn, " &
                 "TempWaterOut, CirculationFanOn, CoolingFanOn, RoughingPumpOn, " &
-                "BoosterOn, RecipeNumber, RecipeRunning, AlarmCondition, DoorOpen )" &
+                "BoosterOn, RecipeNumber, RecipeRunning, AlarmCondition, DoorOpen, EurothermStatus )" &
                 "VALUES (@P00, @P01, @P02, @P03, @P04, @P05, @P06, @P07, " &
-                "@P08, @P09, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17);"
+                "@P08, @P09, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17, @P18);"
 
             'Creates Parameters for database writing
             Dim SQLParams As New List(Of SqlParameter)
@@ -166,6 +166,7 @@ Module Accessories
             Dim Param15 As New SqlParameter("@P15", 0) 'RecipeRunning
             Dim Param16 As New SqlParameter("@P16", 0) 'RecipeRunning
             Dim Param17 As New SqlParameter("@P17", 0) 'RecipeRunning
+            Dim Param18 As New SqlParameter("@P18", "X") 'Status String from EuroTherm transmitter
             'Add Params to List of Parameters
             SQLParams.Add(Param00) : SQLParams.Add(Param01) : SQLParams.Add(Param02)
             SQLParams.Add(Param03) : SQLParams.Add(Param04) : SQLParams.Add(Param05)
@@ -173,6 +174,7 @@ Module Accessories
             SQLParams.Add(Param09) : SQLParams.Add(Param10) : SQLParams.Add(Param11)
             SQLParams.Add(Param12) : SQLParams.Add(Param13) : SQLParams.Add(Param14)
             SQLParams.Add(Param15) : SQLParams.Add(Param16) : SQLParams.Add(Param17)
+            SQLParams.Add(Param18)
 
             'Assign values to Parameters
             'Temperature Set Point
@@ -205,12 +207,12 @@ Module Accessories
             If sngTemp < -14.5 Then sngTemp = -14.5 'This sets it into a range that won't be charted.
             Param05.Value = sngTemp
 
-            'Heater Load A %
-            sngTemp = VacuDrawArray(6, 1) / 100
+            'Heater Load A
+            sngTemp = VacuDrawArray(6, 1)
             If sngTemp < 0 Then sngTemp = 0
             Param06.Value = sngTemp
 
-            'Heater Load B %
+            'Heater Load B
             sngTemp = VacuDrawArray(7, 1) / 100
             If sngTemp < 0 Then sngTemp = 0
             Param07.Value = sngTemp
@@ -280,6 +282,15 @@ Module Accessories
                 Param17.Value = 1
             Else
                 Param17.Value = 0
+            End If
+
+            'EuroTherm Status
+            Param18.Value = EuroThermStatus
+
+            'This applies some logig to account for variances in the way data gets sent
+            'to the Eurotherm data collector.
+            If Param11.Value = 1 Then 'Cooling is on
+                Param02.Value = 0 'No heater output is recorded
             End If
 
             'Execute Append query

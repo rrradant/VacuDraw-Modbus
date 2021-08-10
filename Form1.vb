@@ -2,13 +2,23 @@
 
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim strVer As String
         Try
             cmdStartPolling.Enabled = False
             cmdStopPolling.Enabled = False
+
+            'Get Version and Deployment information
+            strVer = "Program version: " & My.Application.Info.Version.ToString
+            If Deployment.Application.ApplicationDeployment.IsNetworkDeployed = True Then
+                strVer = strVer & vbNewLine
+                strVer = strVer & "Deployment: " & Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
+            End If
+
+
             strINIFile = FileIO.FileSystem.CurrentDirectory.ToString & "\" & My.Application.Info.AssemblyName & ".ini"
             strIPAdd = Read_INI(strINIFile, "[Connection]", "IPAddress")
             strServerConn = Read_INI(strINIFile, "[Connection]", "ConnString")
-
+            VersionText.Text = strVer 'System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
             If IsNothing(strIPAdd) Then
                 Throw New Exception("Cannot read IP Address from INI file.")
             End If
