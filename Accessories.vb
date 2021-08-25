@@ -137,7 +137,12 @@ Module Accessories
         Dim RecordCount As Integer
         Dim intTemp As Integer
         Dim sngTemp As Single
+        Dim ParamString, Portion As String
+
+        Portion = ""
+        ParamString = ""
         Try
+            Portion = "SQL Definitions"
             'Append aggregate values
             strAppendQuery = "INSERT INTO [VacuDraw] (TempSP, TempAct, TempOut, " &
                 "TempLoad, Vacuum, Pressure, HeaterLoadA, HeaterLoadB, TempWaterIn, " &
@@ -176,6 +181,7 @@ Module Accessories
             SQLParams.Add(Param15) : SQLParams.Add(Param16) : SQLParams.Add(Param17)
             SQLParams.Add(Param18)
 
+            Portion = "Assignment of Values"
             'Assign values to Parameters
             'Temperature Set Point
             intTemp = CInt(VacuDrawArray(0, 1))
@@ -208,7 +214,7 @@ Module Accessories
             Param05.Value = sngTemp
 
             'Heater Load A
-            sngTemp = VacuDrawArray(6, 1)
+            sngTemp = VacuDrawArray(6, 1) / 100
             If sngTemp < 0 Then sngTemp = 0
             Param06.Value = sngTemp
 
@@ -293,9 +299,57 @@ Module Accessories
                 Param02.Value = 0 'No heater output is recorded
             End If
 
+            'Debugging steps for Parameter values
+            'Param00.Value = 0
+            'Param01.Value = 0
+            'Param02.Value = 0
+            'Param03.Value = 0
+            'Param04.Value = 0
+            'Param05.Value = 0
+            'Param06.Value = 0
+            'Param07.Value = 0
+            'Param08.Value = 0
+            'Param09.Value = 0
+            'Param10.Value = 0
+            'Param11.Value = 0
+            'Param12.Value = 0
+            'Param13.Value = 0
+            'Param14.Value = 0
+            'Param15.Value = 0
+            'Param15.Value = 0
+            'Param17.Value = 0
+            'Param18.Value = "XYZ"
+
+            Portion = "Database Activities"
             'Execute Append query
             Dim DBcmd1 As New SqlCommand(strAppendQuery, DBConn)
             SQLParams.ForEach(Sub(p) DBcmd1.Parameters.Add(p))
+
+            'Generate parameter list string, just in case
+            ParamString = vbCrLf & "Parameter Values listed below:" & vbCrLf
+            SQLParams.ForEach(Sub(p) ParamString = ParamString & p.ToString & ": " & p.SqlValue.ToString & vbCrLf)
+
+            'Debugging steps for Parameter values
+            'Console.WriteLine("Param00: " & Param00.Value.ToString)
+            'Console.WriteLine("Param01: " & Param01.Value.ToString)
+            'Console.WriteLine("Param02: " & Param02.Value.ToString)
+            'Console.WriteLine("Param03: " & Param03.Value.ToString)
+            'Console.WriteLine("Param04: " & Param04.Value.ToString)
+            'Console.WriteLine("Param05: " & Param05.Value.ToString)
+            'Console.WriteLine("Param06: " & Param06.Value.ToString)
+            'Console.WriteLine("Param07: " & Param07.Value.ToString)
+            'Console.WriteLine("Param08: " & Param08.Value.ToString)
+            'Console.WriteLine("Param09: " & Param09.Value.ToString)
+            'Console.WriteLine("Param10: " & Param10.Value.ToString)
+            'Console.WriteLine("Param11: " & Param11.Value.ToString)
+            'Console.WriteLine("Param12: " & Param12.Value.ToString)
+            'Console.WriteLine("Param13: " & Param13.Value.ToString)
+            'Console.WriteLine("Param14: " & Param14.Value.ToString)
+            'Console.WriteLine("Param15: " & Param15.Value.ToString)
+            'Console.WriteLine("Param16: " & Param15.Value.ToString)
+            'Console.WriteLine("Param17: " & Param17.Value.ToString)
+            'Console.WriteLine("Param18: " & Param18.Value.ToString)
+
             Dim dbDT As New DataTable
             Dim dbDA As New SqlDataAdapter(DBcmd1)
             RecordCount = dbDA.Fill(dbDT)
@@ -309,7 +363,7 @@ Module Accessories
             End If
 
         Catch ex As Exception
-            WriteMessage(ex.Message)
+            WriteMessage(ex.Message & vbCrLf & Portion & ParamString)
         End Try
     End Sub
 
