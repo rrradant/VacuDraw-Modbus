@@ -361,7 +361,7 @@ Module Accessories
             If DBConn.State = ConnectionState.Open Then
                 DBConn.Close()
             End If
-
+            'comment here.
         Catch ex As Exception
             WriteMessage(ex.Message & vbCrLf & Portion & ParamString)
         End Try
