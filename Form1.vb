@@ -1,6 +1,5 @@
 ﻿Public Class MainForm
 
-
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim strVer As String
         Try
@@ -13,7 +12,6 @@
                 strVer = strVer & vbNewLine
                 strVer = strVer & "Deployment: " & Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
             End If
-
 
             strINIFile = FileIO.FileSystem.CurrentDirectory.ToString & "\" & My.Application.Info.AssemblyName & ".ini"
             strIPAdd = Read_INI(strINIFile, "[Connection]", "IPAddress")
@@ -29,10 +27,10 @@
                 Throw New Exception("Cannot make connection to database.")
             End If
             cmdStartPolling.Enabled = True
+            cmdStartPolling.PerformClick()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Main Form Load")
         End Try
-
 
     End Sub
 
