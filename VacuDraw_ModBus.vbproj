@@ -162,6 +162,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <Content Include="IsGood.txt" />
     <Content Include="VacuDraw_DAQ.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
