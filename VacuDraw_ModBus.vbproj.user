@@ -3,7 +3,7 @@
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
     <PublishUrlHistory>F:\DataApps\VacuDraw\</PublishUrlHistory>
-    <InstallUrlHistory>\\ctfs01\tooldb\DataApps\VacuDraw\</InstallUrlHistory>
+    <InstallUrlHistory>\\ctfs01a\tooldb\DataApps\VacuDraw\|\\ctfs01\tooldb\DataApps\VacuDraw\</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
