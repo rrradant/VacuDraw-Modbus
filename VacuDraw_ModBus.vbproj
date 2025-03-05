@@ -163,10 +163,9 @@
     </None>
     <None Include="App.config" />
     <Content Include="IsGood.txt" />
-    <Content Include="VacuDraw_DAQ.ini">
+    <Content Include="VacuDraw DataLink.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="VacuDraw_ModBus_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

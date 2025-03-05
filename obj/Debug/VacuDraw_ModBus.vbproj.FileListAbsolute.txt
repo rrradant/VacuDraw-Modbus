@@ -38,18 +38,18 @@ C:\Users\rrradant\Source\Repos\rrradant\VacuDraw-Modbus\bin\Debug\EasyModbus.dll
 C:\Users\rrradant\Source\Repos\rrradant\VacuDraw-Modbus\obj\Debug\VacuDraw_DAQ.exe.manifest
 C:\Users\rrradant\Source\Repos\rrradant\VacuDraw-Modbus\obj\Debug\VacuDraw_DAQ.application
 C:\Users\rrradant\Source\Repos\rrradant\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.CopyComplete
-C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\VacuDraw_DAQ.ini
-C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\EasyModbus.dll
-C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.AssemblyReference.cache
-C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.GenerateResource.cache
-C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.CoreCompileInputs.cache
-C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.CopyComplete
+C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\VacuDraw DataLink.ini
 C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\VacuDraw DataLink.exe.config
 C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\VacuDraw DataLink.exe
 C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\VacuDraw DataLink.pdb
 C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\VacuDraw DataLink.xml
+C:\Users\rrradant\repositories\VacuDraw-Modbus\bin\Debug\EasyModbus.dll
+C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.AssemblyReference.cache
 C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_DataLink.MainForm.resources
 C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_DataLink.Resources.resources
+C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.GenerateResource.cache
+C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.CoreCompileInputs.cache
+C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw_ModBus.vbproj.CopyComplete
 C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw DataLink.exe
 C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw DataLink.xml
 C:\Users\rrradant\repositories\VacuDraw-Modbus\obj\Debug\VacuDraw DataLink.pdb
