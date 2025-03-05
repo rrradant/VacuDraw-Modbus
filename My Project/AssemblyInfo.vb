@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("VacuDraw DAQ")>
+<Assembly: AssemblyTitle("VacuDraw DataLink")>
 <Assembly: AssemblyDescription("VacuDraw furtnace data acquisition via ModBus and SQL Server")>
 <Assembly: AssemblyCompany("SPIROL International")>
 <Assembly: AssemblyProduct("VacuDraw_ModBus")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.1.0")>
-<Assembly: AssemblyFileVersion("1.0.4.0")>
+<Assembly: AssemblyVersion("1.0.2.0")>
+<Assembly: AssemblyFileVersion("1.0.5.0")>

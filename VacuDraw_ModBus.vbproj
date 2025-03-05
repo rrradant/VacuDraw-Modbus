@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FF4FC974-68CC-46B5-892F-5B18352E9716}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>VacuDraw_DAQ.My.MyApplication</StartupObject>
-    <RootNamespace>VacuDraw_DAQ</RootNamespace>
-    <AssemblyName>VacuDraw_DAQ</AssemblyName>
+    <StartupObject>VacuDraw_DataLink.My.MyApplication</StartupObject>
+    <RootNamespace>VacuDraw_DataLink</RootNamespace>
+    <AssemblyName>VacuDraw DataLink</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -40,7 +40,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>VacuDraw_DAQ.xml</DocumentationFile>
+    <DocumentationFile>VacuDraw DataLink.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -50,7 +50,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>VacuDraw_DAQ.xml</DocumentationFile>
+    <DocumentationFile>VacuDraw DataLink.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -72,7 +72,7 @@
     <ManifestKeyFile>VacuDraw_ModBus_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
